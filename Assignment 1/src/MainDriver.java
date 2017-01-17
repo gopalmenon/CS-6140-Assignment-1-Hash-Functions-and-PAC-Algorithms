@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class MainDriver {
 
@@ -10,9 +11,8 @@ public class MainDriver {
 	
 	private void runBirthdayParadoxTests() {
 		
-		BirthdayParadox birthdayParadox = new BirthdayParadox();
-		System.out.println("Trials till collision: " + birthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE));
-		
+		System.out.println("A: Trials till collision: " + BirthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
+		System.out.println("B: Cumulative Density Plot: " + BirthdayParadox.getCumulativeDensityPlot(BirthdayParadox.NUMBER_OF_ITERATIONS));
 	}
 
 }
