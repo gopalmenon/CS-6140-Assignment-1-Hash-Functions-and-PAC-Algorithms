@@ -4,9 +4,12 @@ import java.util.Random;
 import java.util.Set;
 
 public class MainDriver {
-	
+
 	private DecimalFormat decimalFormat;
 
+	/**
+	 * Constructor
+	 */
 	public MainDriver() {
 		this.decimalFormat = new DecimalFormat("0.0000");
 	}
@@ -21,9 +24,11 @@ public class MainDriver {
 	private void runBirthdayParadoxTests() {
 		
 		System.out.println("A: Trials till collision: " + BirthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
-		Map<Integer, Double> plotValues = BirthdayParadox.getCumulativeDensityPlot(BirthdayParadox.NUMBER_OF_ITERATIONS);
+		Map<Integer, Double> plotValues = BirthdayParadox.getCumulativeDensityPlot(BirthdayParadox.NUMBER_OF_ITERATIONS, BirthdayParadox.DEFAULT_DOMAIN_SIZE);
 		System.out.println("B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
 		System.out.println("C: Expected Trials till Collision: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
+		Map<TrialsAndDomainSize, Long> runTimes = BirthdayParadox.getRunTimes();
+		System.out.println("D: Run Times: " + runTimes);
 	}
 
 	/**
@@ -57,6 +62,10 @@ public class MainDriver {
 		
 	}
 	
+	/**
+	 * @param plotValues
+	 * @return expected number of trials till collision
+	 */
 	private double getExpectedTrialsToCollision(Map<Integer, Double> plotValues) {
 		
 		int totalNumberOfTrials = 0;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,7 +9,10 @@ import java.util.Random;
 import java.util.Set;
 
 public class BirthdayParadox {
-
+	
+	public static final List<Integer> NUMBER_OF_TRIALS_SETTINGS = Arrays.asList(Integer.valueOf(300), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(4000), Integer.valueOf(6000), Integer.valueOf(8000), Integer.valueOf(10000));
+	public static final List<Integer> DOMAIN_SIZE_SETTINGS = Arrays.asList(Integer.valueOf(400), Integer.valueOf(100000), Integer.valueOf(200000), Integer.valueOf(400000), Integer.valueOf(600000), Integer.valueOf(800000), Integer.valueOf(1000000));
+	
 	public static final int DEFAULT_DOMAIN_SIZE = 4000;
 	public static final int NUMBER_OF_ITERATIONS = 300;
 	
@@ -20,7 +24,7 @@ public class BirthdayParadox {
 		//Repeat till you get a collision
 		while(true) {
 		
-			randomIntegerGenerated = randomNumberGenerator.nextInt(DEFAULT_DOMAIN_SIZE);
+			randomIntegerGenerated = randomNumberGenerator.nextInt(domainSize);
 			++trialCounter;
 			if (randomIntegersGeneratedSoFar.contains(Integer.valueOf(randomIntegerGenerated))) {
 				return trialCounter;
@@ -32,7 +36,7 @@ public class BirthdayParadox {
 		
 	}
 	
-	public static Map<Integer, Double> getCumulativeDensityPlot(int numberOfIterations) {
+	public static Map<Integer, Double> getCumulativeDensityPlot(int numberOfIterations, int domainSize) {
 		
 		Map<Integer, Double> plotValues = new HashMap<Integer, Double>(NUMBER_OF_ITERATIONS);
 		List<Integer> trialsTillCollision = new ArrayList<Integer>(NUMBER_OF_ITERATIONS);
@@ -43,7 +47,7 @@ public class BirthdayParadox {
 		while(iterationCounter++ < NUMBER_OF_ITERATIONS) {
 			
 			randomNumberGenerator = new Random(randomNumberGenerator != null ? randomNumberGenerator.nextLong() : System.currentTimeMillis());
-			trialsTillCollision.add(Integer.valueOf(getTrialsTillCollision(DEFAULT_DOMAIN_SIZE, randomNumberGenerator)));
+			trialsTillCollision.add(Integer.valueOf(getTrialsTillCollision(domainSize, randomNumberGenerator)));
 
 		}
 		
@@ -59,4 +63,23 @@ public class BirthdayParadox {
 		
 	}
 	
+	public static Map<TrialsAndDomainSize, Long> getRunTimes() {
+		
+		Map<TrialsAndDomainSize, Long> runTimes = new HashMap<TrialsAndDomainSize, Long>();
+		long timeBeforeRun = 0, timeAfterRun = 0;
+		for (Integer trials : NUMBER_OF_TRIALS_SETTINGS) {
+			for (Integer domainSize : DOMAIN_SIZE_SETTINGS) {
+		
+				timeBeforeRun = System.currentTimeMillis();
+				getCumulativeDensityPlot(trials.intValue(), domainSize.intValue());
+				timeAfterRun = System.currentTimeMillis();
+				runTimes.put(new TrialsAndDomainSize(trials.intValue(), domainSize.intValue()), timeAfterRun - timeBeforeRun);
+		
+			}
+		}
+		
+		return runTimes;
+		
+	}
+
 }
