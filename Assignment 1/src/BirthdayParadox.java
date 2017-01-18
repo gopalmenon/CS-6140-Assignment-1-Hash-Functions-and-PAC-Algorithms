@@ -32,7 +32,7 @@ public class BirthdayParadox {
 		
 	}
 	
-	public static String getCumulativeDensityPlot(int numberOfIterations) {
+	public static Map<Integer, Double> getCumulativeDensityPlot(int numberOfIterations) {
 		
 		Map<Integer, Double> plotValues = new HashMap<Integer, Double>(NUMBER_OF_ITERATIONS);
 		List<Integer> trialsTillCollision = new ArrayList<Integer>(NUMBER_OF_ITERATIONS);
@@ -55,28 +55,7 @@ public class BirthdayParadox {
 			
 		}
 		
-		//Create R script for plotting the cumulative density plot
-		StringBuffer xAxis = new StringBuffer(), yAxis = new StringBuffer();
-		xAxis.append("trials = c(");
-		yAxis.append("proportion = c(");
-		
-		boolean firstTime = true;
-		Set<Integer> numberOfTrails = plotValues.keySet();
-		for (Integer trial : numberOfTrails) {
-			
-			if (firstTime) {
-				firstTime = false;
-			} else {
-				xAxis.append(", ");
-				yAxis.append(", ");
-			}
-			
-			xAxis.append(trial.toString());
-			yAxis.append(plotValues.get(trial).toString());
-			
-		}
-		
-		return xAxis.append(")").append("\n").append(yAxis.append(")").toString()).toString();
+		return plotValues;
 		
 	}
 	
