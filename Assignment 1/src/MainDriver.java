@@ -18,17 +18,28 @@ public class MainDriver {
 		
 		MainDriver mainDriver = new MainDriver();
 		mainDriver.runBirthdayParadoxTests();
+		mainDriver.runCouponCollectorTests();
 
 	}
 	
 	private void runBirthdayParadoxTests() {
 		
-		System.out.println("A: Trials till collision: " + BirthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
+		System.out.println("1A: Trials till collision: " + BirthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
 		Map<Integer, Double> plotValues = BirthdayParadox.getCumulativeDensityPlot(BirthdayParadox.NUMBER_OF_ITERATIONS, BirthdayParadox.DEFAULT_DOMAIN_SIZE);
-		System.out.println("B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
-		System.out.println("C: Expected Trials till Collision: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
-		System.out.println("D: Run Times Script:\n" + getOctaveRunTimesPlotScript());
+		System.out.println("1B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
+		System.out.println("1C: Expected Trials till Collision: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
+		System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript());
 
+	}
+	
+	private void runCouponCollectorTests() {
+		
+		System.out.println("2A: Number of trials for generating all numbers upto " + CouponCollectors.DEFAULT_DOMAIN_SIZE + " is " + CouponCollectors.getNummberOfTrialsToFillDomain(CouponCollectors.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
+		
+		
+		
+		
+		
 	}
 
 	/**

@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class BirthdayParadox {
 	
-	public static final List<Integer> NUMBER_OF_TRIALS_SETTINGS = Arrays.asList(Integer.valueOf(300), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(4000), Integer.valueOf(6000), Integer.valueOf(8000), Integer.valueOf(10000));
-	public static final List<Integer> DOMAIN_SIZE_SETTINGS = Arrays.asList(Integer.valueOf(400), Integer.valueOf(100000), Integer.valueOf(200000), Integer.valueOf(400000), Integer.valueOf(600000), Integer.valueOf(800000), Integer.valueOf(1000000));
+	public static final List<Integer> NUMBER_OF_TRIALS_SETTINGS = Arrays.asList(Integer.valueOf(300), Integer.valueOf(1000), Integer.valueOf(2000), Integer.valueOf(3000), Integer.valueOf(4000), Integer.valueOf(5000), Integer.valueOf(6000), Integer.valueOf(7000), Integer.valueOf(8000), Integer.valueOf(9000), Integer.valueOf(10000));
+	public static final List<Integer> DOMAIN_SIZE_SETTINGS = Arrays.asList(Integer.valueOf(400), Integer.valueOf(1000), Integer.valueOf(10000), Integer.valueOf(50000), Integer.valueOf(100000), Integer.valueOf(200000), Integer.valueOf(300000), Integer.valueOf(400000), Integer.valueOf(500000), Integer.valueOf(600000), Integer.valueOf(700000), Integer.valueOf(800000), Integer.valueOf(900000), Integer.valueOf(1000000));
 	
 	public static final int DEFAULT_DOMAIN_SIZE = 4000;
 	public static final int NUMBER_OF_ITERATIONS = 300;
