@@ -84,7 +84,7 @@ public class BirthdayParadox {
 		
 	}
 	
-	public static double getAnalyticalCollisionProbability(int domainSize, int numberOfTrials) {
+	public static double getAnalyticalNonCollisionProbability(int domainSize, int numberOfTrials) {
 		
 		double analyticalCollisionProbability = 1.0;
 		

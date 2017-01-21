@@ -140,7 +140,7 @@ public class MainDriver {
 	
 	private void runAnalyticalComputations() {
 		
-		System.out.println("3A: With " + NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION + " trials for a domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", the probability of a collision is: " + this.decimalFormat.format(BirthdayParadox.getAnalyticalCollisionProbability(BirthdayParadox.DEFAULT_DOMAIN_SIZE, NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION)));
+		System.out.println("3A: With " + NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION + " trials for a domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", the probability of a collision is: " + this.decimalFormat.format(1.0 - BirthdayParadox.getAnalyticalNonCollisionProbability(BirthdayParadox.DEFAULT_DOMAIN_SIZE, NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION)));
 		
 	}
 	
