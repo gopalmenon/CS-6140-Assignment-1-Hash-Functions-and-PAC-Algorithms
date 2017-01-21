@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class CouponCollectors {
+	
+	public static final List<Integer> NUMBER_OF_TRIALS_SETTINGS = Arrays.asList(Integer.valueOf(300), Integer.valueOf(500), Integer.valueOf(1000), Integer.valueOf(1500), Integer.valueOf(2000), Integer.valueOf(2500), Integer.valueOf(3000), Integer.valueOf(3500), Integer.valueOf(4000), Integer.valueOf(4500), Integer.valueOf(5000));
+	public static final List<Integer> DOMAIN_SIZE_SETTINGS = Arrays.asList(Integer.valueOf(200), Integer.valueOf(1000), Integer.valueOf(3000), Integer.valueOf(5000), Integer.valueOf(7000), Integer.valueOf(9000), Integer.valueOf(11000), Integer.valueOf(13000), Integer.valueOf(15000), Integer.valueOf(17000), Integer.valueOf(19000), Integer.valueOf(20000));
 
 	public static final int DEFAULT_DOMAIN_SIZE = 200;
 	public static final int NUMBER_OF_ITERATIONS = 300;
@@ -54,6 +59,25 @@ public class CouponCollectors {
 		}
 		
 		return plotValues;
+		
+	}
+	
+	public static Map<TrialsAndDomainSize, Long> getRunTimes() {
+		
+		Map<TrialsAndDomainSize, Long> runTimes = new HashMap<TrialsAndDomainSize, Long>();
+		long timeBeforeRun = 0, timeAfterRun = 0;
+		for (Integer trials : NUMBER_OF_TRIALS_SETTINGS) {
+			for (Integer domainSize : DOMAIN_SIZE_SETTINGS) {
+		
+				timeBeforeRun = System.currentTimeMillis();
+				getCumulativeDensityPlot(trials.intValue(), domainSize.intValue());
+				timeAfterRun = System.currentTimeMillis();
+				runTimes.put(new TrialsAndDomainSize(trials.intValue(), domainSize.intValue()), timeAfterRun - timeBeforeRun);
+		
+			}
+		}
+		
+		return runTimes;
 		
 	}
 	
