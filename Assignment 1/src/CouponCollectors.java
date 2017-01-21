@@ -81,4 +81,19 @@ public class CouponCollectors {
 		
 	}
 	
+	
+	public static int getAnalyticalTrialsForAllCoupons(int domainSize) {
+		
+		double analyticalTrialsForAllCoupons = 0.0;
+		
+		for (int counter = 1; counter <= domainSize; ++counter) {
+			
+			analyticalTrialsForAllCoupons +=  1.0 / counter;
+		}
+				
+		return (int) (domainSize * analyticalTrialsForAllCoupons);
+		
+	}
+
+	
 }

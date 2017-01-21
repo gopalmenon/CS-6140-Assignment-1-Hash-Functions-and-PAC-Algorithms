@@ -9,6 +9,7 @@ public class MainDriver {
 	public static final String BIRTHDAY_PARADOX_RUNTIMES_PLOT_TITLE = "Birthday Paradox Run Time Plot";
 	public static final String COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE = "Coupon Collectors Run Time Plot";
 	public static final int NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION = 75;
+	public static final int NUMBER_OF_ANALYTICAL_TRIALS_TO_SEE_ALL_COUPONS = 1175;
 	private DecimalFormat decimalFormat;
 
 	/**
@@ -140,8 +141,11 @@ public class MainDriver {
 	
 	private void runAnalyticalComputations() {
 		
+		System.out.println("\n3A: With " + (NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION - 1) + " trials for a domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", the probability of a collision is: " + this.decimalFormat.format(1.0 - BirthdayParadox.getAnalyticalNonCollisionProbability(BirthdayParadox.DEFAULT_DOMAIN_SIZE, NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION - 1)));
 		System.out.println("3A: With " + NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION + " trials for a domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", the probability of a collision is: " + this.decimalFormat.format(1.0 - BirthdayParadox.getAnalyticalNonCollisionProbability(BirthdayParadox.DEFAULT_DOMAIN_SIZE, NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION)));
-		
+				
+		System.out.println("3B: With domain size of " + CouponCollectors.DEFAULT_DOMAIN_SIZE + ", the number of trials for seeing all coupons is: " + CouponCollectors.getAnalyticalTrialsForAllCoupons(CouponCollectors.DEFAULT_DOMAIN_SIZE));
+
 	}
 	
 }
