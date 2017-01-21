@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class BirthdayParadox {
 	
@@ -38,7 +40,7 @@ public class BirthdayParadox {
 	
 	public static Map<Integer, Double> getCumulativeDensityPlot(int numberOfIterations, int domainSize) {
 		
-		Map<Integer, Double> plotValues = new HashMap<Integer, Double>(NUMBER_OF_ITERATIONS);
+		SortedMap<Integer, Double> plotValues = new TreeMap<Integer, Double>();
 		List<Integer> trialsTillCollision = new ArrayList<Integer>(NUMBER_OF_ITERATIONS);
 		Random randomNumberGenerator = null;
 		
@@ -51,7 +53,7 @@ public class BirthdayParadox {
 
 		}
 		
-		//Sort counts and compute fraction of experiments that succeeded in collision after count
+		//Sort and compute fraction of experiments that succeeded in collision after count
 		Collections.sort(trialsTillCollision);
 		for (int trialIndexCounter = 0; trialIndexCounter < NUMBER_OF_ITERATIONS; ++trialIndexCounter) {
 			

@@ -35,8 +35,8 @@ public class MainDriver {
 	private void runCouponCollectorTests() {
 		
 		System.out.println("2A: Number of trials for generating all numbers upto " + CouponCollectors.DEFAULT_DOMAIN_SIZE + " is " + CouponCollectors.getNummberOfTrialsToFillDomain(CouponCollectors.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
-		
-		
+		Map<Integer, Double> plotValues = CouponCollectors.getCumulativeDensityPlot(CouponCollectors.NUMBER_OF_ITERATIONS, CouponCollectors.DEFAULT_DOMAIN_SIZE);
+		System.out.println("2B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
 		
 		
 		
