@@ -8,7 +8,7 @@ public class MainDriver {
 
 	public static final String BIRTHDAY_PARADOX_RUNTIMES_PLOT_TITLE = "Birthday Paradox Run Time Plot";
 	public static final String COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE = "Coupon Collectors Run Time Plot";
-	
+	public static final int NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION = 75;
 	private DecimalFormat decimalFormat;
 
 	/**
@@ -23,6 +23,7 @@ public class MainDriver {
 		MainDriver mainDriver = new MainDriver();
 		mainDriver.runBirthdayParadoxTests();
 		mainDriver.runCouponCollectorTests();
+		mainDriver.runAnalyticalComputations();
 
 	}
 	
@@ -42,7 +43,7 @@ public class MainDriver {
 		Map<Integer, Double> plotValues = CouponCollectors.getCumulativeDensityPlot(CouponCollectors.NUMBER_OF_ITERATIONS, CouponCollectors.DEFAULT_DOMAIN_SIZE);
 		System.out.println("2B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
 		System.out.println("2C: Expected Trials till all values are generated: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
-		System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript(CouponCollectors.getRunTimes(), COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE, CouponCollectors.NUMBER_OF_TRIALS_SETTINGS, CouponCollectors.DOMAIN_SIZE_SETTINGS));
+		//System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript(CouponCollectors.getRunTimes(), COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE, CouponCollectors.NUMBER_OF_TRIALS_SETTINGS, CouponCollectors.DOMAIN_SIZE_SETTINGS));
 		
 	}
 
@@ -135,6 +136,12 @@ public class MainDriver {
 		
 		return octaveRunTimesPlotScript.toString();
 	
+	}
+	
+	private void runAnalyticalComputations() {
+		
+		System.out.println("3A: With " + NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION + " trials for a domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", the probability of a collision is: " + this.decimalFormat.format(BirthdayParadox.getAnalyticalCollisionProbability(BirthdayParadox.DEFAULT_DOMAIN_SIZE, NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION)));
+		
 	}
 	
 }

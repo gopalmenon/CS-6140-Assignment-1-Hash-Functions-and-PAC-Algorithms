@@ -83,5 +83,18 @@ public class BirthdayParadox {
 		return runTimes;
 		
 	}
+	
+	public static double getAnalyticalCollisionProbability(int domainSize, int numberOfTrials) {
+		
+		double analyticalCollisionProbability = 1.0;
+		
+		for (int trial = 1; trial < numberOfTrials; ++trial) {
+			
+			analyticalCollisionProbability *= (double) (domainSize - trial) / domainSize;
+		}
+				
+		return analyticalCollisionProbability;
+		
+	}
 
 }
