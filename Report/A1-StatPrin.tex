@@ -138,16 +138,41 @@ The run time plot is shown in figure \ref{ccruntimes}.
 \section{Comparing Experiments to Analysis (24 points)}
 
 \paragraph{A: (12 points)}
-Calculate analytically (using formulas from the notes in \textbf{L2}) the number of random trials needed so there is a collision with probability at least $0.5$ when the domain size is $n = 4000$.  There are a few formulas stated with varying degree of accuracy, you may use any of these -- the more accurat formula, the more sure you may be that your experimental part is verified, or is not (and you need to fix something).  
-\\ \emph{[Show your work, including describing which formula you used.]}
+Calculate analytically (using formulas from the notes in \textbf{L2}) the number of random trials needed so there is a collision with probability at least $0.5$ when the domain size is $n = 4000$.  There are a few formulas stated with varying degree of accuracy, you may use any of these -- the more accurate formula, the more sure you may be that your experimental part is verified, or is not (and you need to fix something).  
+\\ \emph{[Show your work, including describing which formula you used.]}\\
 
-How does this compare to your results from \textsf{Q1.C}?  
+The probability of a collision after $k$ trials is given by\\
+
+\begin{equation*}
+\begin{aligned}
+\Pr(collision) &= 1 - \Pr(no \, collision)\\
+&= 1 - \prod_{i=1}^{k-1} \frac{n-i}{n} 
+\end{aligned}
+\end{equation*}
+
+By trial and error and running the computation in a program, I found out that for a domain size of $n=4000$, after $74$ trials, the probability of a collision is $0.4931$ and after $75$ trials the probability is $0.5025$. 
+
+How does this compare to your results from \textsf{Q1.C}?  \\
+
+In \textsf{Q1.C} the empirical result for expected number of trials till a collision was $86$ compared to the analytical result of $75$ trials for a collision probability of at least $0.5$.
 
 \paragraph{B: (12 points)}
 Calculate analytically (using formulas from the notes in \textbf{L2}) the expected number of random trials before all elements are witnessed in a domain of size $n=200$?  Again, there are a few formulas you may use -- the more accurate, the more confidence you might have in your experimental part.  
-\\ \emph{[Show your work, including describing which formula you used.]}
+\\ \emph{[Show your work, including describing which formula you used.]}\\
 
-How does this compare to your results from \textsf{Q2.C}?
+The expected number of trials for seeing all $n$ elements is given by
+
+\begin{equation*}
+\begin{aligned}
+T&= n \sum_{i=1}^n \frac{1}{i}
+\end{aligned}
+\end{equation*}
+
+For a domain size of $n=200$, this was computed to be $1175$.\\
+
+How does this compare to your results from \textsf{Q2.C}?\\
+
+In \textsf{Q2.C} the empirical result for expected number of trials till for seeing all elements was $1192$ compared to the analytical result of $1175$ trials.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
