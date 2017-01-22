@@ -64,6 +64,8 @@ Empirical estimate for the expected number of random trials till collision is $8
 \paragraph{D: (10 points)}  
 Describe how you implemented this experiment and how long it took for $m = 300$ trials.  \\
 
+For each iteration of the experiment where it was run $m$ times, the number of trials till collision was recorded. The trials till collision were put into an array and the array was sorted. For each entry in the array with index $x$, the corresponding fraction of experiments that succeeded in having a collision was computed as $\frac{x}{m}$.\\
+
 For $300$ trials and a domain size of $4000$, it took $29$ $ms$ to run.\\
 
 Show a plot of the run time as you gradually increase the parameters $n$ and $m$.  
@@ -89,22 +91,47 @@ Consider a domain $[n]$ of size $n = 200$.
 \paragraph{A: (5 points)}
 Generate random numbers in the domain $[n]$ until every value $i \in [n]$ has had one random number equal to $i$.
 How many random trials did this take?  
-We will use $k$ to represent this value.  
+We will use $k$ to represent this value.  \\
+
+It took $1434$ random trials for generating all numbers up to $200$.
 
 \paragraph{B: (10 points)}
 Repeat step $A$ for $m=300$ times, and for each repetition record the value $k$ of how many random trials we required to collect all values $i \in [n]$.  
-Make a cumulative density plot as in 1.B.  
+Make a cumulative density plot as in 1.B.  \\
+
+The cumulative density plot is shown in figure \ref{cumplot2}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=5.5in]{figures/cumdenplot2b.png}
+\caption{Cumulative density plot for trials till all numbers in domain are generated for experiment repeated $300$ times for a domain of size $4000$}
+\label{cumplot2}
+\end{figure}
 
 \paragraph{C: (5 points)}
-Use the above results to calculate the empirical expected value of $k$.
+Use the above results to calculate the empirical expected value of $k$.\\
+
+Empirical estimate for the expected number of random trials till all values are generated is $1191.0276$.
 
 \paragraph{D: (10 points)} 
-Describe how you implemented this experiment and how long it took for $n=200$ and $m=300$ trials.  
+Describe how you implemented this experiment and how long it took for $n=200$ and $m=300$ trials.  \\
+
+For each iteration of the experiment where it was run $m$ times, the number of trials till every number in the domain was generated, was recorded. The numbers of trials were put into an array and the array was sorted. For each entry in the array with index $x$, the corresponding fraction of experiments that succeeded in generating every number in the domain was computed as $\frac{x}{m}$.\\
+
+For $300$ trials and domain size of $200$, it took $40$ $ms$ to run.\\
 
 Show a plot of the run time as you gradually increase the parameters $n$ and $m$.  
 (For at least 3 fixed values of $m$ between 300 and 5,000, plot the time as a function of $n$.)
 You should be able to reach $n = 20{,}000$ and $m = 5{,}000$.  
 
+The run time plot is shown in figure \ref{ccruntimes}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=5.5in]{figures/ccruntimes.png}
+\caption{Coupon Collectors run time plot}
+\label{ccruntimes}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
