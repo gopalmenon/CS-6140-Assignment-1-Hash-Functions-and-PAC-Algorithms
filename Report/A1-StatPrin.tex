@@ -1,6 +1,9 @@
 \documentclass[11pt]{article}
 
 \usepackage{classDM17}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \title{Asmt 1: Hash Functions and PAC Algorithms}
 \author{Turn in (\textbf{a pdf}) through Canvas by 2:45pm: \\
@@ -182,16 +185,91 @@ In \textsf{Q2.C} the empirical result for expected number of trials till for see
 Consider when the only random function you have is one that choses a bit at random.  In particular \texttt{rand-bit()} returns \texttt{0} or \texttt{1} at uniformly random.  
 
 \paragraph{A: (6 points)}
-How can you use this to create a random integer number between $1$ and $n=1024$?  
+How can you use this to create a random integer number between $1$ and $n=1024$?  \\
+
+We can create an array of $1024$ booleans and each entry in the array can be set to $True$ or $False$ based on the value returned by \texttt{rand-bit()}. This array can be considered to be the binary representation of the random number that needs to be generated. Algorithm \ref{Rand1} is shown below that uses this technique for generating a random number when the upper limit is a power of $2$.\\
+
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Random Number Generation Algorithm}\label{Rand1}
+    \begin{algorithmic}[1]
+      \Procedure{Random Number Generation}{$upperLimit$}
+        \State $exponent = \log_2 (upperLimit)$
+      	\State $randomNumberArray$ = $boolean$[$exponent$]
+	\For {$arrayIndex \, in \, range(1 \, to \, exponent)$}
+	  \If {$\texttt{rand-bit()} == 0$}
+	    \State $randomNumberArray [arrayIndex] = False$
+	  \Else 
+	    \State $randomNumberArray$ [$arrayIndex$] = $True$
+	  \EndIf
+	\EndFor
+	\State $randomNumber = 1$
+	\For {$arrayIndex \, in \, range(1 \, to \, exponent)$}
+	  \If {$randomNumberArray [arrayIndex] == True$}
+	    \State $randomNumber = randomNumber + 2^{arrayIndex - 1}$
+	  \EndIf
+	\EndFor
+	\Return $randomNumber$
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}\\
 
 \paragraph{B: (5 points)}
-Describe a Las Vegas randomized algorithm (``Las Vegas'' randomized algorithm means: it may run forever, but you can bound how long you expect it to take, and when it finishes you know it is done and correct) for generating a random number in $[n]$ when $n=1000$.  
+Describe a Las Vegas randomized algorithm (``Las Vegas'' randomized algorithm means: it may run forever, but you can bound how long you expect it to take, and when it finishes you know it is done and correct) for generating a random number in $[n]$ when $n=1000$.  \\
+
+Algorithm \ref{Rand2} shows a Las Vegas algorithm for generating a random number. When the upper limit for the random number is not a power of $2$, as in this case, the binary representation of the random number has a size such that the maximum number that can be generated, is larger than the upper limit. So in case that the random number generated is larger than the upper limit, the process is repeated till the generated random number is within the upper limit. Due to this reason, there is the possibility that the process may run forever.\\
+
+In each run, the probability of generating a number within the upper limit of $1000$ is $\frac{1000}{1024}$ and the probability of failure is $\frac{24}{1024}$. So the $while$ loop in algorithm \ref{Rand2} is expected to have $\ceil*{\frac{1024}{1000}} = 2$ iterations.
+
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Las Vegas Random Number Generation Algorithm}\label{Rand2}
+    \begin{algorithmic}[1]
+      \Procedure{Las Vegas Random Number Generation}{$upperLimit$}
+        \State $exponent = \ceil*{\log_2 (upperLimit)}$
+	\State $randomNumberGenerated = False$
+	\While {$not \, randomNumberGenerated$} 
+      	  \State $randomNumberArray$ = $boolean$[$exponent$]
+	  \For {$arrayIndex \, in \, range(1 \, to \, exponent)$}
+	    \If {$\texttt{rand-bit()} == 0$}
+	      \State $randomNumberArray [arrayIndex] = False$
+	    \Else 
+	      \State $randomNumberArray$ [$arrayIndex$] = $True$
+	    \EndIf
+	  \EndFor
+	  \State $randomNumber = 1$
+	  \For {$arrayIndex \, in \, range(1 \, to \, exponent)$}
+	    \If {$randomNumberArray [arrayIndex] == True$}
+	      \State $randomNumber = randomNumber + 2^{arrayIndex - 1}$
+	    \EndIf
+  	  \EndFor
+	\If {$randomNumber \leq upperLimit$}
+	  \State $randomNumberGenerated = True$
+	\EndIf
+	\EndWhile
+	\Return $randomNumber$
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}\\
 
 \paragraph{C: (5 points)}  
 Describe how many \texttt{rand-bit()} calls does the above procedure (extending your algorithm in \textbf{4B}) take as a function of $n$ (say I were to increase the value $n$, how does the number of calls to \texttt{rand-bit()} change)?  
 
-\emph{[Keep in mind that in many settings generating a random bit is much more expensive that a standard CPU operation (like an addition, if statement, or a memory reference), so it is critical to minimize them.  ]}
+\emph{[Keep in mind that in many settings generating a random bit is much more expensive that a standard CPU operation (like an addition, if statement, or a memory reference), so it is critical to minimize them.  ]}\\
 
+In the above case where $n = 1000$, \texttt{rand-bit()} will be called $10$ times per iteration of the $while$ loop. The $while$ loop is expected to have $2$ iterations as described above. Hence we can expect 20 calls to be made to \texttt{rand-bit()}. This expected number of calls will not change till $n$ is increased till $1023$. When $n=1024$, the $while$ loop will execute only once as the random number generated will be at most $1024$. \\
+
+When $n$ is $1025$, the binary number used for random number generation will have $11$ bits and the largest number that can be generated is $2048$. The probability of success becomes $\frac{1025}{2048}$ and that of failure becomes $\frac{1023}{2048}$. We can expect to call \texttt{rand-bit()} $11 \times 2 = 22$ times.\\
+
+The number of calls $N$ to \texttt{rand-bit()} as a function of $n$ will be
+
+\begin{equation*}
+\begin{aligned}
+N &= \ceil*{\log_2 {n}} \times 2
+\end{aligned}
+\end{equation*}
 
 \vspace{-.1in}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
