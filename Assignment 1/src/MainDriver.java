@@ -10,6 +10,8 @@ public class MainDriver {
 	public static final String COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE = "Coupon Collectors Run Time Plot";
 	public static final int NUMBER_OF_ANALYTICAL_TRIALS_FOR_COLLISION = 75;
 	public static final int NUMBER_OF_ANALYTICAL_TRIALS_TO_SEE_ALL_COUPONS = 1175;
+	public static final int RANDOM_NUMBER_GENERATOR_UPPER_POWER_OF_2_LIMIT = 1024;
+
 	private DecimalFormat decimalFormat;
 
 	/**
@@ -25,15 +27,18 @@ public class MainDriver {
 		mainDriver.runBirthdayParadoxTests();
 		mainDriver.runCouponCollectorTests();
 		mainDriver.runAnalyticalComputations();
-
+		mainDriver.runRandomNumberGenerationTests();
 	}
 	
 	private void runBirthdayParadoxTests() {
 		
 		System.out.println("1A: Trials till collision: " + BirthdayParadox.getTrialsTillCollision(BirthdayParadox.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
+		long timeBeforeRun = System.currentTimeMillis();
 		Map<Integer, Double> plotValues = BirthdayParadox.getCumulativeDensityPlot(BirthdayParadox.NUMBER_OF_ITERATIONS, BirthdayParadox.DEFAULT_DOMAIN_SIZE);
+		long timeAfterRun = System.currentTimeMillis();
 		System.out.println("1B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
 		System.out.println("1C: Expected Trials till Collision: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
+		System.out.println("1D: For " + BirthdayParadox.NUMBER_OF_ITERATIONS + " trials and domain size of " + BirthdayParadox.DEFAULT_DOMAIN_SIZE + ", it took " + (timeAfterRun - timeBeforeRun) + " ms.");
 		System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript(BirthdayParadox.getRunTimes(), BIRTHDAY_PARADOX_RUNTIMES_PLOT_TITLE, BirthdayParadox.NUMBER_OF_TRIALS_SETTINGS, BirthdayParadox.DOMAIN_SIZE_SETTINGS));
 
 	}
@@ -41,10 +46,13 @@ public class MainDriver {
 	private void runCouponCollectorTests() {
 		
 		System.out.println("2A: Number of trials for generating all numbers upto " + CouponCollectors.DEFAULT_DOMAIN_SIZE + " is " + CouponCollectors.getNummberOfTrialsToFillDomain(CouponCollectors.DEFAULT_DOMAIN_SIZE, new Random(System.currentTimeMillis())));
+		long timeBeforeRun = System.currentTimeMillis();
 		Map<Integer, Double> plotValues = CouponCollectors.getCumulativeDensityPlot(CouponCollectors.NUMBER_OF_ITERATIONS, CouponCollectors.DEFAULT_DOMAIN_SIZE);
+		long timeAfterRun = System.currentTimeMillis();
 		System.out.println("2B: Cumulative Density Plot:\n" + getCumulativeDensityPlotRScript(plotValues));
 		System.out.println("2C: Expected Trials till all values are generated: " + this.decimalFormat.format(getExpectedTrialsToCollision(plotValues)));
-		//System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript(CouponCollectors.getRunTimes(), COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE, CouponCollectors.NUMBER_OF_TRIALS_SETTINGS, CouponCollectors.DOMAIN_SIZE_SETTINGS));
+		System.out.println("1D: For " + CouponCollectors.NUMBER_OF_ITERATIONS + " trials and domain size of " + CouponCollectors.DEFAULT_DOMAIN_SIZE + ", it took " + (timeAfterRun - timeBeforeRun) + " ms.");
+		System.out.println("1D: Run Times Script:\n" + getOctaveRunTimesPlotScript(CouponCollectors.getRunTimes(), COUPON_COLLECTORS_RUNTIMES_PLOT_TITLE, CouponCollectors.NUMBER_OF_TRIALS_SETTINGS, CouponCollectors.DOMAIN_SIZE_SETTINGS));
 		
 	}
 
@@ -130,7 +138,7 @@ public class MainDriver {
 		octaveRunTimesPlotScript.append("]\n");
 		
 		octaveRunTimesPlotScript.append("mesh (tx, ty, tz);\n");
-		octaveRunTimesPlotScript.append("xlabel (\"Iterations\");\n");
+		octaveRunTimesPlotScript.append("xlabel (\"Trials\");\n");
 		octaveRunTimesPlotScript.append("ylabel (\"Domain Size\");\n");
 		octaveRunTimesPlotScript.append("zlabel (\"Run Time (ms)\");\n");
 		octaveRunTimesPlotScript.append("title (\"").append(title).append("\");\n");
@@ -146,6 +154,13 @@ public class MainDriver {
 				
 		System.out.println("3B: With domain size of " + CouponCollectors.DEFAULT_DOMAIN_SIZE + ", the number of trials for seeing all coupons is: " + CouponCollectors.getAnalyticalTrialsForAllCoupons(CouponCollectors.DEFAULT_DOMAIN_SIZE));
 
+	}
+	
+	private void runRandomNumberGenerationTests() {
+		
+		LasVegasRandomNumberGenerator lasVegasRandomNumberGenerator = new LasVegasRandomNumberGenerator(RANDOM_NUMBER_GENERATOR_UPPER_POWER_OF_2_LIMIT);
+		System.out.println("\n4A: Random number between 1 and " + RANDOM_NUMBER_GENERATOR_UPPER_POWER_OF_2_LIMIT + " is " + lasVegasRandomNumberGenerator.getNextInt());
+		
 	}
 	
 }
