@@ -6,7 +6,7 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \title{Asmt 1: Hash Functions and PAC Algorithms}
-\author{Turn in (\textbf{a pdf}) through Canvas by 2:45pm: \\
+\author{Gopal Menon\\Turn in (\textbf{a pdf}) through Canvas by 2:45pm: \\
 Wednesday, January 25}
 \date{}
 
@@ -107,7 +107,7 @@ The cumulative density plot is shown in figure \ref{cumplot2}.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=5.5in]{figures/cumdenplot2b.png}
-\caption{Cumulative density plot for trials till all numbers in domain are generated for experiment repeated $300$ times for a domain of size $4000$}
+\caption{Cumulative density plot for trials till all numbers in domain are generated for experiment repeated $300$ times for a domain of size $200$}
 \label{cumplot2}
 \end{figure}
 
@@ -263,11 +263,19 @@ In the above case where $n = 1000$, \texttt{rand-bit()} will be called $10$ time
 
 When $n$ is $1025$, the binary number used for random number generation will have $11$ bits and the largest number that can be generated is $2048$. The probability of success becomes $\frac{1025}{2048}$ and that of failure becomes $\frac{1023}{2048}$. We can expect to call \texttt{rand-bit()} $11 \times 2 = 22$ times.\\
 
-The number of calls $N$ to \texttt{rand-bit()} as a function of $n$ will be
+The number of calls $N$ to \texttt{rand-bit()} as a function of $n$ will be at most
 
 \begin{equation*}
 \begin{aligned}
 N &= \ceil*{\log_2 {n}} \times 2
+\end{aligned}
+\end{equation*}
+
+In the case where $n$ is a power of $2$, 
+
+\begin{equation*}
+\begin{aligned}
+N &= \log_2 {n}
 \end{aligned}
 \end{equation*}
 
@@ -291,6 +299,41 @@ That is, how large does $k$ need to be for \emph{all} counts to be within $1\%$ 
 How does this change if we want
 $\Pr[ |\mu - 1/n| \geq 0.001] \leq \delta$ (for $0.1\%$ accuracy)?
 
-\emph{[Make sure to show your work.]}
+\emph{[Make sure to show your work.]}\\
 
+As given in the class notes, consider a set of $r$ independent random variables, $\{X_1, \dots, X_r\}$ such that $-\Delta \leq X_i \leq \Delta$ for each $i \in [r]$. Let $A = \frac{1}{r}  \sum_{i=1}^r X_i$. Then for any $\alpha > 0$
+
+\begin{equation*}
+\begin{aligned}
+\Pr[\left |A - \mathbf{E}(A)\right | > \alpha] \leq 2 \exp \left ( \frac{-r\alpha^2}{2 \Delta^2}\right )
+\end{aligned}
+\end{equation*}
+
+In the case of the above problem, we can replace the $>$ in the above relation by $\geq$ and it should still be approximately correct.
+
+\begin{equation*}
+\begin{aligned}
+\Pr[\left |\mu - \frac{1}{n}\right | \geq 0.01] \leq \delta = 2 \exp \left ( \frac{-k(0.01)^2}{2 (n-1)^2}\right )
+\end{aligned}
+\end{equation*}
+
+Taking the natural log on both sides of the equality
+
+\begin{equation*}
+\begin{aligned}
+\ln{\delta} &= \frac{-k(0.01)^2}{2 (n-1)^2} \ln{2}\\
+k &= -\frac{2 (n-1)^2}{(0.01)^2 \ln{2}} \ln{\delta}\\
+&= 20000\frac{ (n-1)^2 \ln{\frac{1}{\delta}}}{\ln{2}} 
+\end{aligned}
+\end{equation*}
+
+If we change $\alpha$ from $0.01$ to $0.001$, then the value of $k$ becomes $100$ what it was above due to the square of the term in the denominator.
+
+\begin{equation*}
+\begin{aligned}
+k'= 2000000\frac{ (n-1)^2 \ln{\frac{1}{\delta}}}{\ln{2}} 
+\end{aligned}
+\end{equation*}
+
+ 
 \end{document}
